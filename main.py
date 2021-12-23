@@ -13,6 +13,7 @@ if LIST_MODELS:
   os.system("tts --list_models")
 
 def generate(text, out_path):
+  text = text.replace('"','\\"') # :|
   command = [
     f'tts --text "{text}"',
     f'--model_name "{MODEL_NAME}"' if MODEL_NAME is not None else "",
