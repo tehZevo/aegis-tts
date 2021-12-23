@@ -7,6 +7,10 @@ from protopost import ProtoPost
 PORT = int(os.getenv("PORT", 80))
 MODEL_NAME = os.getenv("MODEL_NAME", None)
 VOCODER_NAME = os.getenv("VOCODER_NAME", None)
+LIST_MODELS = os.getenv("LIST_MODELS", "false") == "true"
+
+if LIST_MODELS:
+  os.system("tts --list_models")
 
 def generate(text, out_path):
   command = [
