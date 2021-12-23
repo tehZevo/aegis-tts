@@ -1,4 +1,4 @@
-import os
+import subprocess
 import uuid
 import base64
 
@@ -13,14 +13,13 @@ if LIST_MODELS:
   os.system("tts --list_models")
 
 def generate(text, out_path):
-  text = text.replace('"','\\"') # :|
-  command = [
-    f'tts --text "{text}"',
-    f'--model_name "{MODEL_NAME}"' if MODEL_NAME is not None else "",
-    f'--vocoder_name "{VOCODER_NAME}"' if VOCODER_NAME is not None else "",
-    f'--out_path "{out_path}"'
-  ]
-  os.system(" ".join(command))
+  command = ["tts", "--text", text]
+  if MODEL_NAME is not None:
+    command += ["--model_name", MODEL_NAME]
+  if VOCODER_NAME is not None:
+    command += ["--vocoder_name", VOCODER_NAME]
+  command += ["--out_path", out_path]
+  subprocess.call(command)
 
 def handler(data):
   fn = str(uuid.uuid4()) + ".wav"
